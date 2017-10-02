@@ -17,6 +17,7 @@ module.exports = {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist')
   },
+  devtool: 'cheap-module-eval-source-map',
   plugins: [
     new HtmlWebpackPlugin(),
     new webpack.HotModuleReplacementPlugin()
@@ -30,7 +31,10 @@ module.exports = {
           loader: 'babel-loader',
           options: {
             presets: ['env', 'es2015', 'react'],
-            plugins: ['react-hot-loader/babel']
+            plugins: [
+              'react-hot-loader/babel',
+              'transform-class-properties'
+            ]
           }
         }
       }
