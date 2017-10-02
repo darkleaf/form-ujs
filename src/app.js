@@ -72,8 +72,6 @@ const desc = t.map([
   ])
 ]);
 
-
-
 function inputCF(desc) {
   const name = desc.get(kw('id'));
   return class extends React.PureComponent {
@@ -105,11 +103,6 @@ function groupCF(desc) {
             const W = widgets[idx];
             const wData = data.get(key);
             const wOnChange = value => {
-              //хреновый подход
-              //нужно путь передавать,
-              //т.к. если shoulComponentUpdate,
-              //то в ветках будут старые данные
-              //хотя нужно тестить
               const newData = data.clone();
               newData.set(key, value);
               onChange(newData);
