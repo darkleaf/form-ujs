@@ -1,167 +1,92 @@
 /*
-1. текстовая строка
-2. textarea
-3. select обычный
-4. select автокомплит
-5. select множественный
-5. select множественный автокомплит
-6. булев чекбокс
-7. селект как радиобаттоны
-8. селект как чекбоксы
-9. загрузка файлов аяксом и установка урла
-10. загрузкаа картинок
-11. ввод целых чисел
-12. ввод чисел с точкой
-13. ввод цвета
-14. выбор даты
-15. выбор даты-времени
-16. выбор времени - может быть нужно будет для транзита делать новый тип
-17. выбор интервала дат ??
+ * группа инпутов
+ * вложенные
+ * вложенные с добавлением/удалением
+ * вложенные с перемещением
+ * инпут
+ * инпут с html типами
+ * textarea
+ * debunce inputs
+ * radios as select
+ * autosuggest
+ * checkboxes as multiselect
+ * tags select / multi autsuggest
+ * single checkbox
+ * инпут для целых чисел (шаг)
+ * для чисел с точкой
+ * для даты
+ * для даты/времени
+ * загрузка фалов/картинок
+ */
 
-интренационализация должна быть в приложении, т.е. в схеме.
-
-*/
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import t from 'transit-js';
 const kw = t.keyword;
 
+import input from './factories/input';
+import group from './factories/group';
+import nested from './factories/nested';
+import registry from './factories-registry';
+import formBuilder from './form-builder';
+
+registry.set(kw('input'), input);
+registry.set(kw('group'), group);
+registry.set(kw('nested'), nested);
+
 const desc = t.map([
-  kw('id'), kw('app/user-data'),
+  kw('id'), kw('data'),
   kw('widget'), kw('group'),
   kw('items-order'), [
-    kw('auth'),
-    kw('other')
+    kw('user/name'),
+    kw('user/email'),
+    kw('user/participations')
   ],
   kw('items'), t.map([
-    kw('auth'), t.map([
-      kw('id'), kw('auth'),
-      kw('widget'), kw('group'),
-      kw('items-order'), [
-        kw('app/name'),
-        kw('app/email')
-      ],
-      kw('items'), t.map([
-        kw('app/name'), t.map([
-          kw('id'), kw('app/name'),
-          kw('widget'), kw('input')
-        ]),
-        kw('app/email'), t.map([
-          kw('id'), kw('app/email'),
-          kw('widget'), kw('input'),
-          kw('input'),  t.map([
-            kw('type'), kw('email')
-          ])
-        ])
+    kw('user/name'), t.map([
+      kw('id'), kw('user/name'),
+      kw('widget'), kw('input')
+    ]),
+    kw('user/email'), t.map([
+      kw('id'), kw('user/email'),
+      kw('widget'), kw('input'),
+      kw('input'),  t.map([
+        kw('type'), kw('email')
       ])
     ]),
-    kw('other'), t.map([
-      kw('id'), kw('other'),
-      kw('widget'), kw('group'),
-      kw('items-order'), [
-        kw('app/foo')
-      ],
-      kw('items'), t.map([
-        kw('app/foo'), t.map([
-          kw('id'), kw('app/foo'),
-          kw('widget'), kw('input')
+    kw('user/participations'), t.map([
+      kw('id'), kw('user/participations'),
+      kw('widget'), kw('nested'),
+      kw('nested'), t.map([
+        kw('id'), kw('participation'),
+        kw('widget'), kw('group'),
+        kw('items-order'), [
+          kw('participation/name')
+        ],
+        kw('items'), t.map([
+          kw('participation/name'), t.map([
+            kw('id'), kw('participation/name'),
+            kw('widget'), kw('input')
+          ])
         ])
       ])
     ])
   ])
 ]);
 
-function inputCF(desc) {
-  const name = desc.get(kw('id'));
-  return class extends React.PureComponent {
-    static displayName = `Input(${name})`
-    render() {
-      const {data, onChange} = this.props;
-      const handleChange = e => onChange(e.target.value);
-      return <input value={data} onChange={handleChange} />;
-    }
-  };
-}
-
-function groupCF(desc) {
-  const name = desc.get(kw('id')).name();
-  const itemsOrder = desc.get(kw('items-order'));
-  const items = desc.get(kw('items'));
-  const widgets = itemsOrder.map((item) => {
-    const desc = items.get(item);
-    return buildWidget(desc);
-  });
-
-  return class extends React.PureComponent {
-    static displayName = `Group(${name})`
-    render() {
-      const {data, errors, onChange} = this.props;
-      return (
-        <div>
-          {itemsOrder.map((key, idx) => {
-            const W = widgets[idx];
-            const wData = data.get(key);
-            const wOnChange = value => {
-              const newData = data.clone();
-              newData.set(key, value);
-              onChange(newData);
-            };
-            const wErrors = null; //TODO
-
-            return <W key={key} data={wData} errors={wErrors} onChange={wOnChange} />;
-          })}
-        </div>
-      );
-    }
-  };
-}
-
-const cfRegistry = t.map([
-  kw('input'), inputCF,
-  kw('group'), groupCF
-]);
-
-function buildWidget(description) {
-  const widgetId = description.get(kw('widget'));
-  const cf = cfRegistry.get(widgetId);
-  return cf(description);
-}
-
-function buildForm(desc, initialData, initialErrors) {
-  const Widget = buildWidget(desc);
-
-  return class Form extends React.Component {
-    constructor(props) {
-      super(props);
-      this.state = {
-        data: initialData,
-        errors: initialErrors
-      };
-    }
-
-    handleChange = (data) => {
-      this.setState({data});
-    }
-
-    render() {
-      return (
-        <Widget data={this.state.data}
-                errors={this.state.errors}
-                onChange={this.handleChange} />
-      );
-    }
-  };
-}
-
 const initialData = t.map([
-  kw('auth'), t.map([
-    kw('app/name'), "some name",
-    kw('app/email'), "foo@bar"
-  ]),
-  kw('other'), t.map([
-    kw('app/foo'), "foo"
-  ])
+  kw('user/name'), "some name",
+  kw('user/email'), "foo@bar",
+
+  kw('user/participations'), [
+    t.map([
+      kw('participation/name'), "foo"
+    ]),
+    t.map([
+      kw('participation/name'), "bar"
+    ])
+  ]
 ]);
 
-export default buildForm(desc, initialData);
+export default formBuilder(desc, initialData);
