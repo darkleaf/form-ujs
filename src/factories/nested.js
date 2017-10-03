@@ -23,14 +23,17 @@ export default function nested(desc) {
     render() {
       return (
         <div>
-          nested
+          <label>{name.toString()}</label>
           {this.props.data.map((itemData, idx) => {
             const itemErrors = null; //TODO
             const itemHandleChange = bind(this.handleChange, this, idx);
             return (
-              <Widget key={idx} //todo может неправильно
-                      data={itemData}
-                      onChange={itemHandleChange} />
+              <div className="card mb-3" key={idx}> {/* todo check key */}
+                <div className="card-body">
+                  <Widget data={itemData}
+                          onChange={itemHandleChange} />
+                </div>
+              </div>
             );
           })}
         </div>

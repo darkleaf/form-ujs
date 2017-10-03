@@ -21,7 +21,6 @@
 
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import t from 'transit-js';
 const kw = t.keyword;
 
@@ -89,4 +88,12 @@ const initialData = t.map([
   ]
 ]);
 
-export default formBuilder(desc, initialData);
+const Form = formBuilder(desc, initialData);
+
+export default function App() {
+  return (
+    <div className="container">
+      <Form />
+    </div>
+  );
+}

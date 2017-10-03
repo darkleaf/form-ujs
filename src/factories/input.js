@@ -15,10 +15,10 @@ export default function input(desc) {
 
     render() {
       return (
-        <div>
-          {name.toString()}
-          &nbsp;
-          <input value={this.props.data}
+        <div className="form-group">
+          <label>{name.toString()}</label>
+          <input className="form-control"
+                 value={this.props.data}
                  onChange={bind(this.handleChange, this)} />
         </div>
       );

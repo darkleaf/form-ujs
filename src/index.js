@@ -4,17 +4,13 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './app';
 
-(() => {
-  const el = document.createElement('div');
-  el.id = 'root';
-  document.body.appendChild(el);
-})();
+const root = document.getElementById('root');
 
 ReactDOM.render(
   <AppContainer>
     <App />
   </AppContainer>,
-  document.getElementById('root')
+  root
 );
 
 // Hot Module Replacement API
@@ -25,7 +21,7 @@ if (module.hot) {
       <AppContainer>
         <NextApp/>
       </AppContainer>,
-      document.getElementById('root')
+      root
     );
   });
 }

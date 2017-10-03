@@ -26,22 +26,19 @@ export default function group(desc) {
     render() {
       const {data, errors, onChange} = this.props;
       return (
-        <div>
-          {name.toString()}
-          {itemsOrder.map((key, idx) => {
-            const Widget = widgets[idx];
-            const wData = data.get(key);
-            const wErrors = null; //TODO
-            const wHandleChage = bind(this.handleChange, this, key);
+        itemsOrder.map((key, idx) => {
+          const Widget = widgets[idx];
+          const wData = data.get(key);
+          const wErrors = null; //TODO
+          const wHandleChage = bind(this.handleChange, this, key);
 
-            return (
-              <Widget key={key}
-                      data={wData}
-                      errors={wErrors}
-                      onChange={wHandleChage} />
-            );
-          })}
-        </div>
+          return (
+            <Widget key={key}
+                    data={wData}
+                    errors={wErrors}
+                    onChange={wHandleChage} />
+          );
+        })
       );
     }
   };
