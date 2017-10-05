@@ -6,7 +6,7 @@ const kw = t.keyword;
 
 import widgetBuilder from '../widget-builder';
 
-export default function nested(desc) {
+export default function Nested(desc) {
   const name = desc.get(kw('id'));
   const nested = desc.get(kw('nested'));
   const Widget = widgetBuilder(nested);

@@ -24,15 +24,19 @@ import React from 'react';
 import t from 'transit-js';
 const kw = t.keyword;
 
-import input from './factories/input';
-import group from './factories/group';
-import nested from './factories/nested';
+import Input from './factories/input';
+import Group from './factories/group';
+import Nested from './factories/nested';
+import DatetimeLocal from './factories/datetime-local';
+
 import registry from './factories-registry';
 import formBuilder from './form-builder';
 
-registry.set(kw('input'), input);
-registry.set(kw('group'), group);
-registry.set(kw('nested'), nested);
+registry.set(kw('input'), Input);
+registry.set(kw('group'), Group);
+registry.set(kw('nested'), Nested);
+registry.set(kw('datetime-local'), DatetimeLocal);
+
 
 const desc = t.map([
   kw('id'), kw('data'),
@@ -40,6 +44,7 @@ const desc = t.map([
   kw('items-order'), [
     kw('user/name'),
     kw('user/email'),
+    kw('user/birthday'),
     kw('user/participations')
   ],
   kw('items'), t.map([
@@ -53,6 +58,10 @@ const desc = t.map([
       kw('input'),  t.map([
         kw('type'), kw('email')
       ])
+    ]),
+    kw('user/birthday'), t.map([
+      kw('id'), kw('user/birthday'),
+      kw('widget'), kw('datetime-local'),
     ]),
     kw('user/participations'), t.map([
       kw('id'), kw('user/participations'),
@@ -77,6 +86,7 @@ const desc = t.map([
 const initialData = t.map([
   kw('user/name'), "some name",
   kw('user/email'), "foo@bar",
+  kw('user/birthday'), new Date(),
 
   kw('user/participations'), [
     t.map([

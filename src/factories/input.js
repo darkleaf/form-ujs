@@ -4,7 +4,7 @@ import bind from 'memoize-bind';
 import t from 'transit-js';
 const kw = t.keyword;
 
-export default function input(desc) {
+export default function Input(desc) {
   const name = desc.get(kw('id'));
   return class extends React.PureComponent {
     static displayName = `Input(${name})`

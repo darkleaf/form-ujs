@@ -5,7 +5,7 @@ const kw = t.keyword;
 
 import widgetBuilder from '../widget-builder';
 
-export default function group(desc) {
+export default function Group(desc) {
   const name = desc.get(kw('id'));
   const itemsOrder = desc.get(kw('items-order'));
   const items = desc.get(kw('items'));
