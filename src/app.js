@@ -19,25 +19,12 @@
  * загрузка фалов/картинок
  */
 
-
 import React from 'react';
 import t from 'transit-js';
 const kw = t.keyword;
 
-import Form from './factories/form';
-import Input from './factories/input';
-import Group from './factories/group';
-import Nested from './factories/nested';
-import DatetimeLocal from './factories/datetime-local';
-
-import registry from './factories-registry';
+import './main';
 import widgetBuilder from './widget-builder';
-
-registry.set(kw('form'), Form);
-registry.set(kw('input'), Input);
-registry.set(kw('group'), Group);
-registry.set(kw('nested'), Nested);
-registry.set(kw('datetime-local'), DatetimeLocal);
 
 const desc = t.map([
   kw('id'), kw('form'),
@@ -103,12 +90,12 @@ const initialData = t.map([
   ]
 ]);
 
-const FormComponent = widgetBuilder(desc);
+const Form = widgetBuilder(desc);
 
 export default function App() {
   return (
     <div className="container">
-      <FormComponent initialData={initialData} />
+      <Form initialData={initialData} />
     </div>
   );
 }
