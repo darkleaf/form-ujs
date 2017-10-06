@@ -8,6 +8,23 @@ const kw = t.keyword;
 
 const format = 'YYYY-MM-DDTHH:mm';
 
+function isStrBlank(str) {
+  if (str === null) return true;
+  if (str === undefined) return true;
+  if (str === '') return true;
+  return false;
+}
+
+function strToFecha(str) {
+  if (isStrBlank(str)) return undefined;
+  return fecha.parse(str, format);
+}
+
+function dateToStr(date) {
+  if (!(date instanceof Date)) return "";
+  return fecha.format(date, format);
+}
+
 export default function DatetimeLocal(desc) {
   const name = desc.get(kw('id'));
   return class extends React.PureComponent {
@@ -16,27 +33,23 @@ export default function DatetimeLocal(desc) {
     //todo: для safari и прочих нужна своя реализация,
     //т.к. событие будет приходить как от обычного инпута
     onChange(e) {
-      const textValue = e.target.value;
-      const value = fecha.parse(textValue, format);
+      const value = strToFecha(e.target.value);
 
-      //value может быть false, если не распрасилось
+      //value может быть false, если не распарсилось
 
       this.props.onChange(value);
     }
 
     render() {
-      const value = fecha.format(this.props.data, format);
       return (
         <div className="form-group">
           <label>{name.toString()}</label>
           <input className="form-control"
                  type="datetime-local"
-                 value={value}
+                 value={dateToStr(this.props.data)}
                  onChange={bind(this.onChange, this)} />
         </div>
       );
     }
   };
 }
-
-window.fecha = fecha;
