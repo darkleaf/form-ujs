@@ -17,7 +17,7 @@ export default function Group(desc) {
   return class extends React.PureComponent {
     static displayName = `Group(${name})`
 
-    handleChange(key, value) {
+    onChange(key, value) {
       const data = this.props.data.clone();
       data.set(key, value);
       this.props.onChange(data);
@@ -30,13 +30,13 @@ export default function Group(desc) {
           const Widget = widgets[idx];
           const wData = data.get(key);
           const wErrors = null; //TODO
-          const wHandleChage = bind(this.handleChange, this, key);
+          const wOnChage = bind(this.onChange, this, key);
 
           return (
             <Widget key={key}
                     data={wData}
                     errors={wErrors}
-                    onChange={wHandleChage} />
+                    onChange={wOnChage} />
           );
         })
       );

@@ -24,11 +24,12 @@ import t from 'transit-js';
 const kw = t.keyword;
 
 import './main';
+import State from './state';
 import widgetBuilder from './widget-builder';
 
 const desc = t.map([
-  kw('id'), kw('form'),
-  kw('widget'), kw('form'),
+  kw('id'), kw('submit'),
+  kw('widget'), kw('submit'),
   kw('body'), t.map([
     kw('id'), kw('data'),
     kw('widget'), kw('group'),
@@ -95,7 +96,9 @@ const Form = widgetBuilder(desc);
 export default function App() {
   return (
     <div className="container">
-      <Form initialData={initialData} />
+      <State widget={Form}
+             initialData={initialData}
+             errors={null} />
     </div>
   );
 }

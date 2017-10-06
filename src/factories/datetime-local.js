@@ -15,7 +15,7 @@ export default function DatetimeLocal(desc) {
 
     //todo: для safari и прочих нужна своя реализация,
     //т.к. событие будет приходить как от обычного инпута
-    handleChange(e) {
+    onChange(e) {
       const textValue = e.target.value;
       const value = fecha.parse(textValue, format);
 
@@ -32,7 +32,7 @@ export default function DatetimeLocal(desc) {
           <input className="form-control"
                  type="datetime-local"
                  value={value}
-                 onChange={bind(this.handleChange, this)} />
+                 onChange={bind(this.onChange, this)} />
         </div>
       );
     }

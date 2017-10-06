@@ -14,7 +14,7 @@ export default function Nested(desc) {
   return class extends React.PureComponent {
     static displayName = `Nested(${name})`
 
-    handleChange(idx, value) {
+    onChange(idx, value) {
       const data = this.props.data.slice();
       data[idx] = value;
       this.props.onChange(data);
@@ -26,12 +26,12 @@ export default function Nested(desc) {
           <label>{name.toString()}</label>
           {this.props.data.map((itemData, idx) => {
             const itemErrors = null; //TODO
-            const itemHandleChange = bind(this.handleChange, this, idx);
+            const itemOnChange = bind(this.onChange, this, idx);
             return (
               <div className="card mb-3" key={idx}> {/* todo check key */}
                 <div className="card-body">
                   <Widget data={itemData}
-                          onChange={itemHandleChange} />
+                          onChange={itemOnChange} />
                 </div>
               </div>
             );

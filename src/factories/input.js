@@ -9,7 +9,7 @@ export default function Input(desc) {
   return class extends React.PureComponent {
     static displayName = `Input(${name})`
 
-    handleChange(e) {
+    onChange(e) {
       this.props.onChange(e.target.value);
     }
 
@@ -19,7 +19,7 @@ export default function Input(desc) {
           <label>{name.toString()}</label>
           <input className="form-control"
                  value={this.props.data}
-                 onChange={bind(this.handleChange, this)} />
+                 onChange={bind(this.onChange, this)} />
         </div>
       );
     }
