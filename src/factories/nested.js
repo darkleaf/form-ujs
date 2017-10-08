@@ -10,12 +10,17 @@ export default function Nested(desc) {
   const name = desc.get(kw('id'));
   const nested = desc.get(kw('nested'));
   const Widget = widgetBuilder(nested);
+  const defaultData = [];
 
   return class extends React.PureComponent {
     static displayName = `Nested(${name})`
 
+    data() {
+      return this.pops.data || defaultData;
+    }
+
     onChange(idx, value) {
-      const data = this.props.data.slice();
+      const data = this.data().slice();
       data[idx] = value;
       this.props.onChange(data);
     }
@@ -24,7 +29,7 @@ export default function Nested(desc) {
       return (
         <div>
           <label>{name.toString()}</label>
-          {this.props.data.map((itemData, idx) => {
+          {this.data().map((itemData, idx) => {
             const itemErrors = null; //TODO
             const itemOnChange = bind(this.onChange, this, idx);
             return (

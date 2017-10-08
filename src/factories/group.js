@@ -13,12 +13,18 @@ export default function Group(desc) {
     const desc = items.get(item);
     return widgetBuilder(desc);
   });
+  const keysMap = desc.get(kw('keys-map'));
+  const defaultData = t.map();
 
   return class extends React.PureComponent {
     static displayName = `Group(${name})`
 
+    data() {
+      return this.props.data || defaultData;
+    }
+
     onChange(key, value) {
-      const data = this.props.data.clone();
+      const data = this.data().clone();
       data.set(key, value);
       this.props.onChange(data);
     }
@@ -26,9 +32,10 @@ export default function Group(desc) {
     render() {
       const {data, errors, onChange} = this.props;
       return (
-        itemsOrder.map((key, idx) => {
+        itemsOrder.map((id, idx) => {
           const Widget = widgets[idx];
-          const wData = data.get(key);
+          const key = keysMap.get(id);
+          const wData = this.data().get(key);
           const wErrors = null; //TODO
           const wOnChage = bind(this.onChange, this, key);
 

@@ -6,8 +6,14 @@ const kw = t.keyword;
 
 export default function Input(desc) {
   const name = desc.get(kw('id'));
+
+  const defaultData = "";
   return class extends React.PureComponent {
     static displayName = `Input(${name})`
+
+    data() {
+      return this.props.data || defaultData;
+    }
 
     onChange(e) {
       this.props.onChange(e.target.value);
@@ -18,7 +24,7 @@ export default function Input(desc) {
         <div className="form-group">
           <label>{name.toString()}</label>
           <input className="form-control"
-                 value={this.props.data}
+                 value={this.data()}
                  onChange={bind(this.onChange, this)} />
         </div>
       );

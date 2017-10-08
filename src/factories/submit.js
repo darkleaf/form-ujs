@@ -6,6 +6,7 @@ const kw = t.keyword;
 import widgetBuilder from '../widget-builder';
 
 const writer = t.writer('json');
+const reader = t.reader('json');
 
 export default function Submit(desc) {
   const id = desc.get(kw('id'));
