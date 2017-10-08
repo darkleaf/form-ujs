@@ -2,10 +2,13 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    './src/index.js'
-  ],
+  entry: {
+    main: './src/index.js',
+    demo: [
+      'react-hot-loader/patch',
+      './test/demo.js'
+    ]
+  },
   devServer: {
     hot: true,
     contentBase: './dist',
@@ -13,7 +16,7 @@ module.exports = {
     host: "0.0.0.0"
   },
   output: {
-    filename: 'bundle.js',
+    filename: '[name].js',
     path: path.resolve(__dirname, 'dist')
   },
   devtool: 'eval',
@@ -24,7 +27,10 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        include: path.join(__dirname, 'src'),
+        include: [
+          path.join(__dirname, 'src'),
+          path.join(__dirname, 'test')
+        ],
         use: {
           loader: 'babel-loader',
           options: {

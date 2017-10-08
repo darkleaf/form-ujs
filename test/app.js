@@ -1,31 +1,10 @@
-/*
- * группа инпутов
- * вложенные
- * вложенные с добавлением/удалением
- * вложенные с перемещением
- * инпут
- * инпут с html типами
- * textarea
- * debunce inputs
- * radios as select
- * autosuggest
- * checkboxes as multiselect
- * tags select / multi autsuggest
- * single checkbox
- * инпут для целых чисел (шаг)
- * для чисел с точкой
- * для даты
- * для даты/времени
- * загрузка фалов/картинок
- */
-
 import React from 'react';
 import t from 'transit-js';
 const kw = t.keyword;
 
-import './main';
-import State from './state';
-import widgetBuilder from './widget-builder';
+import '../src/main';
+import State from '../src/state';
+import widgetBuilder from '../src/widget-builder';
 
 const desc = t.map([
   kw('id'), kw('submit'),
@@ -35,6 +14,12 @@ const desc = t.map([
   kw('body'), t.map([
     kw('id'), kw('data'),
     kw('widget'), kw('group'),
+    kw('keys-map'), t.map([
+      kw('user/name'), "name",
+      kw('user/email'), "email",
+      kw('user/birthday'), "birthday",
+      kw('user/participations'), "participations"
+    ]),
     kw('items-order'), [
       kw('user/name'),
       kw('user/email'),
@@ -63,6 +48,9 @@ const desc = t.map([
         kw('nested'), t.map([
           kw('id'), kw('participation'),
           kw('widget'), kw('group'),
+          kw('keys-map'), t.map([
+            kw('participation/name'), "name"
+          ]),
           kw('items-order'), [
             kw('participation/name')
           ],
@@ -79,16 +67,16 @@ const desc = t.map([
 ]);
 
 const initialData = t.map([
-  kw('user/name'), "some name",
-  kw('user/email'), "foo@bar",
-  kw('user/birthday'), new Date(),
+  'name', "some name",
+  'email', "foo@bar",
+  'birthday', new Date(),
 
-  kw('user/participations'), [
+  'participations', [
     t.map([
-      kw('participation/name'), "foo"
+      'name', "foo"
     ]),
     t.map([
-      kw('participation/name'), "bar"
+      'name', "bar"
     ])
   ]
 ]);

@@ -1,27 +1,30 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { AppContainer } from 'react-hot-loader';
 
-import App from './app';
+import t from 'transit-js';
+import './main';
+import State from './state';
+import widgetBuilder from './widget-builder';
 
-const root = document.getElementById('root');
+const forms = document.querySelectorAll('[data-form-ujs]');
 
-ReactDOM.render(
-  <AppContainer>
-    <App />
-  </AppContainer>,
-  root
-);
+for (var f of forms) {
+  const r = t.reader('json');
 
-// Hot Module Replacement API
-if (module.hot) {
-  module.hot.accept('./app', () => {
-    const NextApp = require('./app').default;
-    ReactDOM.render(
-      <AppContainer>
-        <NextApp/>
-      </AppContainer>,
-      root
-    );
-  });
+  const name = f.dataset.formUjs;
+
+  const descStr = document.getElementById(`${name}-description`).text;
+  const dataStr = document.getElementById(`${name}-data`).text;
+
+  const desc = r.read(descStr);
+  const data = r.read(dataStr);
+
+  const Form = widgetBuilder(desc);
+
+  ReactDOM.render(
+    <State widget={Form}
+           initialData={data}
+           errors={null} />,
+    f
+  );
 }
