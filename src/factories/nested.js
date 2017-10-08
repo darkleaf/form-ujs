@@ -16,7 +16,7 @@ export default function Nested(desc) {
     static displayName = `Nested(${name})`
 
     data() {
-      return this.pops.data || defaultData;
+      return this.props.data || defaultData;
     }
 
     onChange(idx, value) {
