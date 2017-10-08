@@ -44,7 +44,7 @@ const desc = t.map([
       ]),
       kw('user/participations'), t.map([
         kw('id'), kw('user/participations'),
-        kw('widget'), kw('nested'),
+        kw('widget'), kw('collection'),
         kw('nested'), t.map([
           kw('id'), kw('participation'),
           kw('widget'), kw('group'),

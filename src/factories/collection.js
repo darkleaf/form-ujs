@@ -6,14 +6,14 @@ const kw = t.keyword;
 
 import widgetBuilder from '../widget-builder';
 
-export default function Nested(desc) {
+export default function Collection(desc) {
   const name = desc.get(kw('id'));
   const nested = desc.get(kw('nested'));
   const Widget = widgetBuilder(nested);
   const defaultData = [];
 
   return class extends React.PureComponent {
-    static displayName = `Nested(${name})`
+    static displayName = `Collection(${name})`
 
     data() {
       return this.props.data || defaultData;
