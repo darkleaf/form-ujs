@@ -14,36 +14,28 @@ export default function Group(desc) {
     return widgetBuilder(desc);
   });
   const keysMap = desc.get(kw('keys-map'));
-  const defaultData = t.map();
-  const defaultErrors = t.map();
 
   return class extends React.PureComponent {
-    static displayName = `Group(${name})`
-
-    data() {
-      return this.props.data || defaultData;
-    }
-
-    errors() {
-      return this.props.errors || defaultErrors;
-    }
+    static displayName = `Group(${name})`;
+    static defaultProps = {
+      data: t.map(),
+      errors: t.map()
+    };
 
     onChange(key, value) {
-      const data = this.data().clone();
+      const data = this.props.data.clone();
       data.set(key, value);
       this.props.onChange(data);
     }
 
     render() {
-      const {data, errors, onChange} = this.props;
-
       // todo: show own errors
       return (
         itemsOrder.map((id, idx) => {
           const Widget = widgets[idx];
           const key = keysMap.get(id);
-          const wData = this.data().get(key);
-          const wErrors = this.errors().get(key);
+          const wData = this.props.data.get(key);
+          const wErrors = this.props.errors.get(key);
           const wOnChage = bind(this.onChange, this, key);
 
           return (

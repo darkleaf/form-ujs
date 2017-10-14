@@ -8,23 +8,15 @@ const kw = t.keyword;
 export default function Input(desc) {
   const name = desc.get(kw('id'));
 
-  const defaultData = "";
-  const defaultErrors = t.map();
-
   return class extends React.PureComponent {
-    static displayName = `Input(${name})`
-
-    data() {
-      return this.props.data || defaultData;
-    }
-
-    errors() {
-      //todo: react default props
-      return this.props.errors || defaultErrors;
-    }
+    static displayName = `Input(${name})`;
+    static defaultProps = {
+      data: "",
+      errors: t.map()
+    };
 
     ownErrors() {
-      return this.errors().get(kw('form-ujs/errors')) || [];
+      return this.props.errors.get(kw('form-ujs/errors')) || [];
     }
 
     onChange(e) {
@@ -38,9 +30,11 @@ export default function Input(desc) {
         <div className="form-group">
           <label>{name.toString()}</label>
           <input className={classNames('form-control', {'is-invalid': errors.length > 0})}
-                 value={this.data()}
+                 value={this.props.data}
                  onChange={bind(this.onChange, this)} />
-          {errors.map(error => <div className="invalid-feedback">{error}</div>)}
+            {errors.map((error, idx) => {
+              return <div key={idx} className="invalid-feedback">{error}</div>;
+            })}
         </div>
       );
     }

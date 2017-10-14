@@ -28,7 +28,7 @@ function dateToStr(date) {
 export default function DatetimeLocal(desc) {
   const name = desc.get(kw('id'));
   return class extends React.PureComponent {
-    static displayName = `DatetimeLocal(${name})`
+    static displayName = `DatetimeLocal(${name})`;
 
     //todo: для safari и прочих нужна своя реализация,
     //т.к. событие будет приходить как от обычного инпута
