@@ -1,3 +1,5 @@
+/* global fetch */
+
 import React from 'react';
 import bind from 'memoize-bind';
 import t from 'transit-js';
@@ -11,7 +13,7 @@ const reader = t.reader('json');
 export default function Submit(desc) {
   const id = desc.get(kw('id'));
   const url = desc.get(kw('url'));
-  const method = desc.get(kw('method'));
+  const method = desc.get(kw('method')).name();
   const body = desc.get(kw('body'));
   const Body = widgetBuilder(body);
 
@@ -40,11 +42,15 @@ export default function Submit(desc) {
       this.setState(
         {loading: true},
         () => {
-          const str = writer.write(this.props.data);
-
-          console.log(str);
-
-          setTimeout(() => this.setState({loading: false}), 2000);
+          const body = writer.write(this.props.data);
+          const headers = {
+            'Content-Type': 'application/transit+json'
+          };
+          fetch(url, {method, body, headers, credentials: 'include'})
+            .then((resp) => {
+              console.log(resp);
+              this.setState({loading: false});
+            });
         }
       );
     }
