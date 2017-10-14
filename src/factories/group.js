@@ -29,22 +29,30 @@ export default function Group(desc) {
     }
 
     render() {
-      // todo: show own errors
-      return (
-        itemsOrder.map((id, idx) => {
-          const Widget = widgets[idx];
-          const key = keysMap.get(id);
-          const wData = this.props.data.get(key);
-          const wErrors = this.props.errors.get(key);
-          const wOnChage = bind(this.onChange, this, key);
+      const ownErrors = this.props.errors.get(kw('form-ujs/errors')) || [];
 
-          return (
-            <Widget key={key}
-                    data={wData}
-                    errors={wErrors}
-                    onChange={wOnChage} />
-          );
-        })
+      return (
+        <div className="mt-3">
+          <div>
+            {ownErrors.map((error, idx) => {
+              return <div key={idx} className="alert alert-danger">{error}</div>;
+            })}
+          </div>
+          <div>
+            {itemsOrder.map((id, idx) => {
+              const Widget = widgets[idx];
+              const key = keysMap.get(id);
+              const wData = this.props.data.get(key);
+              const wErrors = this.props.errors.get(key);
+              const wOnChage = bind(this.onChange, this, key);
+              return  <Widget
+                          key={key}
+                          data={wData}
+                          errors={wErrors}
+                          onChange={wOnChage} />;
+            })}
+          </div>
+        </div>
       );
     }
   };

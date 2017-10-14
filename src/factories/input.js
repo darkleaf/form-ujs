@@ -15,16 +15,12 @@ export default function Input(desc) {
       errors: t.map()
     };
 
-    ownErrors() {
-      return this.props.errors.get(kw('form-ujs/errors')) || [];
-    }
-
     onChange(e) {
       this.props.onChange(e.target.value);
     }
 
     render() {
-      const errors = this.ownErrors();
+      const errors = this.props.errors.get(kw('form-ujs/errors')) || [];
 
       return (
         <div className="form-group">
