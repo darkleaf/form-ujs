@@ -15,12 +15,17 @@ export default function Group(desc) {
   });
   const keysMap = desc.get(kw('keys-map'));
   const defaultData = t.map();
+  const defaultErrors = t.map();
 
   return class extends React.PureComponent {
     static displayName = `Group(${name})`
 
     data() {
       return this.props.data || defaultData;
+    }
+
+    errors() {
+      return this.props.errors || defaultErrors;
     }
 
     onChange(key, value) {
@@ -31,12 +36,14 @@ export default function Group(desc) {
 
     render() {
       const {data, errors, onChange} = this.props;
+
+      // todo: show own errors
       return (
         itemsOrder.map((id, idx) => {
           const Widget = widgets[idx];
           const key = keysMap.get(id);
           const wData = this.data().get(key);
-          const wErrors = null; //TODO
+          const wErrors = this.errors().get(key);
           const wOnChage = bind(this.onChange, this, key);
 
           return (

@@ -46,11 +46,16 @@ export default function Submit(desc) {
           const headers = {
             'Content-Type': 'application/transit+json'
           };
-          fetch(url, {method, body, headers, credentials: 'include'})
-            .then((resp) => {
-              console.log(resp);
-              this.setState({loading: false});
+          fetch(url, {method, body, headers, credentials: 'include'}).then(resp => {
+            this.setState({loading: false}, () => {
+              if (resp.status === 422) {
+                resp.text().then(text => {
+                  const errors = reader.read(text);
+                  this.setErrors(errors);
+                });
+              }
             });
+          });
         }
       );
     }
