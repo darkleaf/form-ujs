@@ -47,12 +47,19 @@ export default function Submit(desc) {
             'Content-Type': 'application/transit+json'
           };
           fetch(url, {method, body, headers, credentials: 'include'}).then(resp => {
+            //todo split by functions
             this.setState({loading: false}, () => {
               if (resp.status === 422) {
                 resp.text().then(text => {
                   const errors = reader.read(text);
                   this.setErrors(errors);
                 });
+              } else if (resp.status === 200) {
+                const location = resp.headers.get('Location');
+                window.location = location;
+              } else {
+                //todo handle
+                console.log(resp);
               }
             });
           });
