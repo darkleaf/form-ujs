@@ -18,12 +18,14 @@ const desc = t.map([
       kw('user/name'), "name",
       kw('user/email'), "email",
       kw('user/birthday'), "birthday",
+      kw('user/hobby'), "hobby",
       kw('user/participations'), "participations"
     ]),
     kw('items-order'), [
       kw('user/name'),
       kw('user/email'),
       kw('user/birthday'),
+      kw('user/hobby'),
       kw('user/participations')
     ],
     kw('items'), t.map([
@@ -41,6 +43,10 @@ const desc = t.map([
       kw('user/birthday'), t.map([
         kw('id'), kw('user/birthday'),
         kw('widget'), kw('datetime-local'),
+      ]),
+      kw('user/hobby'), t.map([
+        kw('id'), kw('user/hobby'),
+        kw('widget'), kw('textarea'),
       ]),
       kw('user/participations'), t.map([
         kw('id'), kw('user/participations'),
@@ -70,7 +76,7 @@ const initialData = t.map([
   'name', "some name",
   'email', "foo@bar",
   'birthday', new Date(),
-
+  'hobby', "beer",
   'participations', [
     t.map([
       'name', "foo"

@@ -1,10 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import bind from 'memoize-bind';
 import fecha from 'fecha';
-
 import t from 'transit-js';
 const kw = t.keyword;
+import generateId from '../generate-id';
 
 const format = 'YYYY-MM-DDTHH:mm';
 
@@ -30,6 +29,11 @@ export default function DatetimeLocal(desc) {
   return class extends React.PureComponent {
     static displayName = `DatetimeLocal(${name})`;
 
+    constructor(props) {
+      super(props);
+      this.id = generateId();
+    }
+
     //todo: для safari и прочих нужна своя реализация,
     //т.к. событие будет приходить как от обычного инпута
     onChange(e) {
@@ -43,8 +47,9 @@ export default function DatetimeLocal(desc) {
     render() {
       return (
         <div className="form-group">
-          <label>{name.toString()}</label>
-          <input className="form-control"
+          <label htmlFor={this.id}>{name.toString()}</label>
+          <input id={this.id}
+                 className="form-control"
                  type="datetime-local"
                  value={dateToStr(this.props.data)}
                  onChange={bind(this.onChange, this)} />
