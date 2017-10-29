@@ -6,10 +6,10 @@ const kw = t.keyword;
 import generateId from '../generate-id';
 
 export default function Textarea(desc) {
-  const name = desc.get(kw('id'));
+  const widgetId = desc.get(kw('id'));
 
   return class extends React.PureComponent {
-    static displayName = `Textarea(${name})`;
+    static displayName = `Textarea(${widgetId})`;
     static defaultProps = {
       data: "",
       errors: t.map()
@@ -32,8 +32,8 @@ export default function Textarea(desc) {
       );
 
       return (
-        <div className="form-group">
-          <label htmlFor={this.id}>{name.toString()}</label>
+        <div className="form-group" data-widget-id={widgetId}>
+          <label htmlFor={this.id}>{widgetId.toString()}</label>
           <textarea id={this.id}
                     className={inputClass}
                     value={this.props.data}

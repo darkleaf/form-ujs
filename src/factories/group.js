@@ -6,7 +6,7 @@ const kw = t.keyword;
 import widgetBuilder from '../widget-builder';
 
 export default function Group(desc) {
-  const name = desc.get(kw('id'));
+  const widgetId = desc.get(kw('id'));
   const itemsOrder = desc.get(kw('items-order'));
   const items = desc.get(kw('items'));
   const widgets = itemsOrder.map(item => {
@@ -16,7 +16,7 @@ export default function Group(desc) {
   const keysMap = desc.get(kw('keys-map'));
 
   return class extends React.PureComponent {
-    static displayName = `Group(${name})`;
+    static displayName = `Group(${widgetId})`;
     static defaultProps = {
       data: t.map(),
       errors: t.map()
@@ -32,7 +32,7 @@ export default function Group(desc) {
       const ownErrors = this.props.errors.get(kw('form-ujs/errors')) || [];
 
       return (
-        <div className="mt-3">
+        <div className="mt-3" data-widget-id={widgetId} >
           <div>
             {ownErrors.map((error, idx) => {
               return <div key={idx} className="alert alert-danger">{error}</div>;

@@ -11,14 +11,14 @@ const writer = t.writer('json');
 const reader = t.reader('json');
 
 export default function Submit(desc) {
-  const id = desc.get(kw('id'));
+  const widgetId = desc.get(kw('id'));
   const url = desc.get(kw('url'));
   const method = desc.get(kw('method')).name();
   const body = desc.get(kw('body'));
   const Body = widgetBuilder(body);
 
   return class extends React.Component {
-    static displayName = `Submit(${id})`
+    static displayName = `Submit(${widgetId})`
 
     constructor(props) {
       super(props);
@@ -69,7 +69,7 @@ export default function Submit(desc) {
 
     render() {
       return (
-        <form>
+        <form data-widget-id={widgetId}>
           <Body data={this.props.data}
                 errors={this.props.errors}
                 onChange={bind(this.onChange, this)}

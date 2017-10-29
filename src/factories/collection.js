@@ -6,12 +6,12 @@ const kw = t.keyword;
 import widgetBuilder from '../widget-builder';
 
 export default function Collection(desc) {
-  const name = desc.get(kw('id'));
+  const widgetId = desc.get(kw('id'));
   const nested = desc.get(kw('nested'));
   const Widget = widgetBuilder(nested);
 
   return class extends React.PureComponent {
-    static displayName = `Collection(${name})`;
+    static displayName = `Collection(${widgetId})`;
     static defaultProps = {
       data: [],
       errors: t.map()
@@ -25,8 +25,8 @@ export default function Collection(desc) {
 
     render() {
       return (
-        <div>
-          <label>{name.toString()}</label>
+        <div data-widget-id={widgetId}>
+          <label>{widgetId.toString()}</label>
           {this.props.data.map((itemData, idx) => {
             const itemErrors = null; //TODO
             const itemOnChange = bind(this.onChange, this, idx);

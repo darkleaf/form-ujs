@@ -25,9 +25,9 @@ function dateToStr(date) {
 }
 
 export default function DatetimeLocal(desc) {
-  const name = desc.get(kw('id'));
+  const widgetId = desc.get(kw('id'));
   return class extends React.PureComponent {
-    static displayName = `DatetimeLocal(${name})`;
+    static displayName = `DatetimeLocal(${widgetId})`;
 
     constructor(props) {
       super(props);
@@ -46,8 +46,9 @@ export default function DatetimeLocal(desc) {
 
     render() {
       return (
-        <div className="form-group">
-          <label htmlFor={this.id}>{name.toString()}</label>
+        <div className="form-group"
+             data-widget-id={widgetId} >
+          <label htmlFor={this.id}>{widgetId.toString()}</label>
           <input id={this.id}
                  className="form-control"
                  type="datetime-local"
