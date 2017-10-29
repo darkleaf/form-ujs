@@ -69,17 +69,18 @@ export default function Submit(desc) {
 
     render() {
       return (
-        <div>
+        <form>
           <Body data={this.props.data}
                 errors={this.props.errors}
                 onChange={bind(this.onChange, this)}
                 setErrors={bind(this.setErrors, this)} />
-          <button className="btn btn-primary"
+          <button type="submit"
+                  className="btn btn-primary"
                   disabled={this.state.loading}
                   onClick={bind(this.onSubmit, this)}>
-            {this.state.loading ? 'loading...' : 'submit'}
+            Submit
           </button>
-        </div>
+        </form>
       );
     }
   };
