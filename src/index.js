@@ -15,16 +15,18 @@ for (var f of forms) {
 
   const descStr = document.getElementById(`${name}-description`).text;
   const dataStr = document.getElementById(`${name}-data`).text;
+  const errorsStr = document.getElementById(`${name}-errors`).text;
 
   const desc = r.read(descStr);
   const data = r.read(dataStr);
+  const errors = r.read(errorsStr);
 
   const Form = widgetBuilder(desc);
 
   ReactDOM.render(
     <State widget={Form}
            initialData={data}
-           errors={null} />,
+           errors={errors} />,
     f
   );
 }
