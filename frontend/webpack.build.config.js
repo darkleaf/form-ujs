@@ -2,38 +2,37 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: [
-    'react-hot-loader/patch',
-    './test/demo.js'
-  ],
-  devServer: {
-    hot: true,
-    contentBase: './dist',
-    port: process.env.DEV_SERVER_PORT || 3000,
-    host: "0.0.0.0"
-  },
+  entry: './src/index.js',
   output: {
-    filename: 'demo.js',
-    path: path.resolve(__dirname, 'dist')
+    filename: 'frontend.js', // todo: add digest and manifest; *.gz version
+    path: path.resolve(__dirname, 'dist', 'production')
   },
-  devtool: 'eval',
+  devtool: 'source-map',
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.EnvironmentPlugin({
+      NODE_ENV: 'production'
+    }),
+
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: true
+    }),
+
+    new webpack.LoaderOptionsPlugin({
+      minimize: true
+    })
   ],
   module: {
     rules: [
       {
         test: /\.js$/,
         include: [
-          path.join(__dirname, 'src'),
-          path.join(__dirname, 'test')
+          path.join(__dirname, 'src')
         ],
         use: {
           loader: 'babel-loader',
           options: {
             presets: ['env', 'es2015', 'react'],
             plugins: [
-              'react-hot-loader/babel',
               'transform-class-properties'
             ]
           }
