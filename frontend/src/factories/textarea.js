@@ -39,10 +39,10 @@ export default function Textarea(desc) {
         [style['c-field--error']]: error
       });
 
-      const hintClass = classNames({
-        [style['c-hint']]: true,
-        [style['c-hint--error']]: true
-      });
+      const hintClass = classNames(
+        style['c-hint'],
+        style['c-hint--error'],
+      );
 
       return (
         <label className={labelClass}>

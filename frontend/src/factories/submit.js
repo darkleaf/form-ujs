@@ -70,13 +70,18 @@ export default function Submit(desc) {
     }
 
     render() {
+      const buttonClass = classNames(
+        style['c-button'],
+        style['c-button--info'],
+      );
+
       return (
         <form>
           <Nested data={this.props.data}
                   errors={this.props.errors}
                   onChange={bind(this.onChange, this)} />
           <button type="submit"
-                  className={classNames(style['c-button'], style['c-button--info'])}
+                  className={buttonClass}
                   disabled={this.state.loading}
                   onClick={bind(this.onSubmit, this)}>
             Submit
