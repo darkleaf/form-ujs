@@ -1,18 +1,22 @@
 import t from 'transit-js';
 const kw = t.keyword;
 
-import Submit from './factories/submit';
-import Input from './factories/input';
-import Textarea from './factories/textarea';
-import Group from './factories/group';
-import Collection from './factories/collection';
-import DatetimeLocal from './factories/datetime-local';
-
 import registry from './factories-registry';
 
+import Submit from './factories/submit';
 registry.set(kw('submit'), Submit);
+
+import Input from './factories/input';
 registry.set(kw('input'), Input);
-registry.set(kw('textarea'), Textarea);
+
+import Group from './factories/group';
 registry.set(kw('group'), Group);
-registry.set(kw('collection'), Collection);
-registry.set(kw('datetime-local'), DatetimeLocal);
+
+import Textarea from './factories/textarea';
+registry.set(kw('textarea'), Textarea);
+
+// import Collection from './factories/collection';
+// import DatetimeLocal from './factories/datetime-local';
+
+// registry.set(kw('collection'), Collection);
+// registry.set(kw('datetime-local'), DatetimeLocal);

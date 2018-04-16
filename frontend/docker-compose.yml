@@ -2,7 +2,7 @@ version: '3.3'
 
 services:
   app:
-    image: node:8.6-alpine
+    image: node:8.11-alpine
     working_dir: "${PWD}"
     command: npm start
     environment:

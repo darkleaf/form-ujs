@@ -1,0 +1,9 @@
+@import 'blaze/scss/dist/objects.forms.min.css';
+@import 'blaze/scss/dist/components.buttons.min.css';
+@import 'blaze/scss/dist/components.inputs.min.css';
+@import 'blaze/scss/dist/components.hints.min.css';
+@import 'blaze/scss/dist/components.alerts.min.css';
+
+.c-alert {
+    display: block;
+}

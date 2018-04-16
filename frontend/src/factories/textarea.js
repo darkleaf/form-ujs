@@ -1,15 +1,17 @@
 import React from 'react';
 import bind from 'memoize-bind';
+
 import classNames from 'classnames';
+import style from './style.css';
+
 import t from 'transit-js';
 const kw = t.keyword;
-import generateId from '../generate-id';
 
 export default function Textarea(desc) {
-  const widgetId = desc.get(kw('id'));
-
+  const label = desc.get(kw('label'));
   return class extends React.PureComponent {
-    static displayName = `Textarea(${widgetId})`;
+    static displayName = 'Textarea$';
+
     static defaultProps = {
       data: "",
       errors: t.map()
@@ -17,7 +19,6 @@ export default function Textarea(desc) {
 
     constructor(props) {
       super(props);
-      this.id = generateId();
     }
 
     onChange(e) {
@@ -25,23 +26,32 @@ export default function Textarea(desc) {
     }
 
     render() {
-      const errors = this.props.errors.get(kw('form-ujs/errors')) || [];
-      const inputClass = classNames(
-        'form-control',
-        {'is-invalid': errors.length > 0}
+      const error = this.props.errors.get(kw('form-ujs/error'));
+
+      const labelClass = classNames(
+        style['o-form-element'],
+        style['c-label']
       );
 
+      const inputClass = classNames({
+        [style['c-field']]: true,
+        [style['c-field--label']]: true,
+        [style['c-field--error']]: error
+      });
+
+      const hintClass = classNames({
+        [style['c-hint']]: true,
+        [style['c-hint--error']]: true
+      });
+
       return (
-        <div className="form-group" data-widget-id={widgetId}>
-          <label htmlFor={this.id}>{widgetId.toString()}</label>
-          <textarea id={this.id}
-                    className={inputClass}
+        <label className={labelClass}>
+          {label}
+          <textarea className={inputClass}
                     value={this.props.data}
                     onChange={bind(this.onChange, this)} />
-          {errors.map((error, idx) => {
-            return <div key={idx} className="invalid-feedback">{error}</div>;
-          })}
-        </div>
+          <div className={hintClass}>{error}</div>
+        </label>
       );
     }
   };

@@ -7,18 +7,20 @@ const kw = t.keyword;
 
 import widgetBuilder from '../widget-builder';
 
+import classNames from 'classnames';
+import style from './style.css';
+
 const writer = t.writer('json');
 const reader = t.reader('json');
 
 export default function Submit(desc) {
-  const widgetId = desc.get(kw('id'));
   const url = desc.get(kw('url'));
   const method = desc.get(kw('method')).name();
-  const body = desc.get(kw('body'));
-  const Body = widgetBuilder(body);
+  const nested = desc.get(kw('nested'));
+  const Nested = widgetBuilder(nested);
 
   return class extends React.Component {
-    static displayName = `Submit(${widgetId})`
+    static displayName = 'Submit$'
 
     constructor(props) {
       super(props);
@@ -69,13 +71,12 @@ export default function Submit(desc) {
 
     render() {
       return (
-        <form data-widget-id={widgetId}>
-          <Body data={this.props.data}
-                errors={this.props.errors}
-                onChange={bind(this.onChange, this)}
-                setErrors={bind(this.setErrors, this)} />
+        <form>
+          <Nested data={this.props.data}
+                  errors={this.props.errors}
+                  onChange={bind(this.onChange, this)} />
           <button type="submit"
-                  className="btn btn-primary"
+                  className={classNames(style['c-button'], style['c-button--info'])}
                   disabled={this.state.loading}
                   onClick={bind(this.onSubmit, this)}>
             Submit

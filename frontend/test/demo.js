@@ -4,11 +4,6 @@ import { AppContainer } from 'react-hot-loader';
 
 import App from './app';
 
-import t from 'transit-js';
-import '../src/main';
-import State from '../src/state';
-import widgetBuilder from '../src/widget-builder';
-
 const root = document.getElementById('root');
 
 ReactDOM.render(
