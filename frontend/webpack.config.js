@@ -39,38 +39,51 @@ module.exports = {
             ]
           }
         }
-      },
-      {
-        test: /\.css$/,
-
+      }, {
+        test: /\.module\.css$/,
+        include: path.resolve(__dirname, "src"),
         use: [{
-          loader: 'style-loader', // inject CSS to page
+          loader: 'style-loader'
         }, {
-          loader: 'css-loader', // translates CSS into CommonJS modules
+          loader: 'css-loader',
           options: {
             modules: true,
             localIdentName: '[local]--[hash:base64:5]'
           }
         }, {
-          loader: 'postcss-loader', // Run post css actions
+          loader: 'postcss-loader',
           options: {
-            plugins: function () { // post css plugins, can be exported to postcss.config.js
-              return [
-                require('postcss-import'),
-                require('postcss-autoreset')({
-                  reset: {
-                    all: 'initial',
-                    boxSizing: 'border-box'
-                  },
-                  rulesMatcher: 'bem'
-                }),
-                require('postcss-initial'),
-                require('autoprefixer')
-              ];
-            }
+            plugins: () => [
+              require('postcss-import'),
+              require('postcss-autoreset')({
+                reset: {
+                  all: 'initial',
+                  boxSizing: 'border-box'
+                },
+                rulesMatcher: 'bem'
+              }),
+              require('postcss-initial'),
+              require('autoprefixer')
+            ]
           }
         }]
-      },
+      }, {
+        test: /\.css$/,
+        exclude: /\.module\.css$/,
+        use: [{
+          loader: 'style-loader'
+        }, {
+          loader: 'css-loader'
+        }, {
+          loader: 'postcss-loader',
+          options: {
+            plugins: () => [
+              require('postcss-import'),
+              require('autoprefixer')
+            ]
+          }
+        }]
+      }
     ]
   }
 };

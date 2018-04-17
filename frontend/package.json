@@ -17,6 +17,7 @@
     "memoize-bind": "^1.0.3",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "react-flatpickr": "^3.6.4",
     "transit-js": "^0.8.861"
   },
   "devDependencies": {

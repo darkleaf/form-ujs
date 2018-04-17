@@ -6,7 +6,7 @@ const kw = t.keyword;
 import widgetBuilder from '../widget-builder';
 
 import classNames from 'classnames';
-import style from './style.css';
+import style from './style.module.css';
 
 export default function Group(desc) {
 

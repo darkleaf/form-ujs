@@ -15,8 +15,8 @@ registry.set(kw('group'), Group);
 import Textarea from './factories/textarea';
 registry.set(kw('textarea'), Textarea);
 
-// import Collection from './factories/collection';
-// import DatetimeLocal from './factories/datetime-local';
+import Flatpickr from './factories/flatpickr';
+registry.set(kw('flatpickr'), Flatpickr);
 
+// import Collection from './factories/collection';
 // registry.set(kw('collection'), Collection);
-// registry.set(kw('datetime-local'), DatetimeLocal);

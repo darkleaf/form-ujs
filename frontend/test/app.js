@@ -119,6 +119,15 @@ const desc = t.map([
       ['text', t.map([
         kw('widget'), kw('textarea'),
         kw('label'), 'Text',
+      ])],
+      ['publishedAt', t.map([
+        kw('widget'), kw('flatpickr'),
+        kw('label'), 'Published at',
+        kw('options'), JSON.stringify({
+          locale: 'ru',
+          enableTime: true,
+          time_24hr: true
+        }),
       ])]
     ]
   ])
@@ -145,6 +154,10 @@ const errors = t.map([
   'text', t.map([
     kw('form-ujs/error'), 'error',
   ]),
+  'publishedAt', t.map([
+    kw('form-ujs/error'), 'error',
+  ]),
+
 ]);
 
 const Form = widgetBuilder(desc);

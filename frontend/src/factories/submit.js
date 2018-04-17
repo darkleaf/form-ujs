@@ -8,7 +8,7 @@ const kw = t.keyword;
 import widgetBuilder from '../widget-builder';
 
 import classNames from 'classnames';
-import style from './style.css';
+import style from './style.module.css';
 
 const writer = t.writer('json');
 const reader = t.reader('json');

@@ -4,17 +4,32 @@ import bind from 'memoize-bind';
 import classNames from 'classnames';
 import style from './style.module.css';
 
+import Flatpickr from 'react-flatpickr';
+import './flatpickr.css';
+import l10n from 'flatpickr/dist/l10n';
+
 import t from 'transit-js';
 const kw = t.keyword;
 
-export default function Input(desc) {
+function getOptions(desc) {
+  let options = desc.get(kw('options'));
+  if (!options) return {};
+  return JSON.parse(options);
+}
+
+export default function FlatpickrFactory(desc) {
   const label = desc.get(kw('label'));
   const type = desc.get(kw('type'));
 
+  const options = getOptions(desc);
+  if (typeof options.locale === 'string') {
+    options.locale = l10n[options.locale];
+  }
+
   return class extends React.PureComponent {
-    static displayName = 'Input$';
+    static displayName = 'Flatpickr$';
+
     static defaultProps = {
-      data: "",
       errors: t.map()
     };
 
@@ -22,8 +37,8 @@ export default function Input(desc) {
       super(props);
     }
 
-    onChange(e) {
-      this.props.onChange(e.target.value);
+    onChange(date) {
+      this.props.onChange(date);
     }
 
     render() {
@@ -48,10 +63,11 @@ export default function Input(desc) {
       return (
         <label className={labelClass}>
           {label}
-          <input className={inputClass}
-                 type={type}
-                 value={this.props.data}
-                 onChange={bind(this.onChange, this)} />
+
+          <Flatpickr options={options}
+                     className={inputClass}
+                     value={this.props.data}
+                     onChange={bind(this.onChange, this)} />
           <div className={hintClass}>{error}</div>
         </label>
       );

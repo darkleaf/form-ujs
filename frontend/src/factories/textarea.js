@@ -2,7 +2,7 @@ import React from 'react';
 import bind from 'memoize-bind';
 
 import classNames from 'classnames';
-import style from './style.css';
+import style from './style.module.css';
 
 import t from 'transit-js';
 const kw = t.keyword;
