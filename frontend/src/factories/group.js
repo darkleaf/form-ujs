@@ -1,5 +1,7 @@
 import React from 'react';
 import bind from 'memoize-bind';
+import _chunk from 'lodash/chunk';
+
 import t from 'transit-js';
 const kw = t.keyword;
 
@@ -10,7 +12,7 @@ import style from './style.module.css';
 
 export default function Group(desc) {
 
-  const nested = desc.get(kw('nested'));
+  const nested = _chunk(desc.get(kw('nested')), 2);
   const widgets = nested.map(([key, desc]) => {
     return [key, widgetBuilder(desc)];
   });
