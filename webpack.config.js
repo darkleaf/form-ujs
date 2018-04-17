@@ -32,7 +32,7 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['env', 'es2015', 'react'],
+            presets: [['env', { modules: false }], 'react'],
             plugins: [
               'react-hot-loader/babel',
               'transform-class-properties'
