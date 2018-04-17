@@ -60,8 +60,7 @@ module.exports = {
                 require('postcss-autoreset')({
                   reset: {
                     all: 'initial',
-                    boxSizing: 'border-box',
-                    fontFamily: '-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Oxygen,Ubuntu,Cantarell,Open Sans,Helvetica Neue,sans-serif'
+                    boxSizing: 'border-box'
                   },
                   rulesMatcher: 'bem'
                 }),
