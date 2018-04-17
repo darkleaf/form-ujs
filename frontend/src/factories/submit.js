@@ -2,6 +2,9 @@
 
 import React from 'react';
 import bind from 'memoize-bind';
+
+import _isString from 'lodash/isString';
+
 import t from 'transit-js';
 const kw = t.keyword;
 
@@ -36,8 +39,17 @@ function send({url, method, data, onRedirect, onErrors, onFatal}) {
 
 export default function Submit(desc) {
   const url = desc.get(kw('url'));
-  const method = desc.get(kw('method')).name();
+  if (!_isString(url))
+    throw new TypeError('submit: url must be a string');
+
+  const method = desc.get(kw('method'));
+  if (!t.isKeyword(method))
+    throw new TypeError('submit: method must be a keyword');
+
   const nested = desc.get(kw('nested'));
+  if (!t.isMap(nested))
+    throw new TypeError('submit: nested must be a transit map');
+
   const Nested = widgetBuilder(nested);
 
   return class extends React.Component {
@@ -64,7 +76,7 @@ export default function Submit(desc) {
       this.setState({ loading: true });
       send({
         url,
-        method,
+        method: method.name(),
         data: this.props.data,
         onRedirect: location => {
           window.location = location;

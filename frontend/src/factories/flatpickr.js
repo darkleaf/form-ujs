@@ -1,6 +1,9 @@
 import React from 'react';
 import bind from 'memoize-bind';
 
+import _isString from 'lodash/isString';
+import _isNil from 'lodash/isNil';
+
 import classNames from 'classnames';
 import style from './style.module.css';
 
@@ -13,13 +16,18 @@ const kw = t.keyword;
 
 function getOptions(desc) {
   let options = desc.get(kw('options'));
-  if (!options) return {};
+  if (_isNil(options)) return {};
+
+  if (!_isString(options))
+    throw new TypeError('flatpickr: options must be a json string');
+
   return JSON.parse(options);
 }
 
 export default function FlatpickrFactory(desc) {
   const label = desc.get(kw('label'));
-  const type = desc.get(kw('type'));
+  if (!_isString(label))
+    throw new TypeError('flatpickr: label must be a string');
 
   const options = getOptions(desc);
   if (typeof options.locale === 'string') {

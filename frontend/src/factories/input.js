@@ -1,6 +1,9 @@
 import React from 'react';
 import bind from 'memoize-bind';
 
+import _isString from 'lodash/isString';
+import _isNil from 'lodash/isNil';
+
 import classNames from 'classnames';
 import style from './style.module.css';
 
@@ -9,7 +12,12 @@ const kw = t.keyword;
 
 export default function Input(desc) {
   const label = desc.get(kw('label'));
+  if (!_isString(label))
+    throw new TypeError('input: label must be a string');
+
   const type = desc.get(kw('type'));
+  if (!_isNil(type) && !_isString(type))
+    throw new TypeError('input: type must be a string');
 
   return class extends React.PureComponent {
     static displayName = 'Input$';

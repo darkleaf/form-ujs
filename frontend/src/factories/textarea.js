@@ -1,6 +1,8 @@
 import React from 'react';
 import bind from 'memoize-bind';
 
+import _isString from 'lodash/isString';
+
 import classNames from 'classnames';
 import style from './style.module.css';
 
@@ -9,6 +11,9 @@ const kw = t.keyword;
 
 export default function Textarea(desc) {
   const label = desc.get(kw('label'));
+  if (!_isString(label))
+    throw new TypeError('textarea: label must be a string');
+
   return class extends React.PureComponent {
     static displayName = 'Textarea$';
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import bind from 'memoize-bind';
+
 import _chunk from 'lodash/chunk';
+import _isArray from 'lodash/isArray';
 
 import t from 'transit-js';
 const kw = t.keyword;
@@ -11,9 +13,13 @@ import classNames from 'classnames';
 import style from './style.module.css';
 
 export default function Group(desc) {
+  const nested = desc.get(kw('nested'));
+  if (!_isArray(nested))
+    throw new TypeError('group: nested must be an array');
+  if (nested.length % 2 !== 0)
+    throw new TypeError('group: nested must contain even number of elements');
 
-  const nested = _chunk(desc.get(kw('nested')), 2);
-  const widgets = nested.map(([key, desc]) => {
+  const widgets = _chunk(nested, 2).map(([key, desc]) => {
     return [key, widgetBuilder(desc)];
   });
 
