@@ -13,7 +13,6 @@
   "dependencies": {
     "blaze": "^4.0.0-7",
     "classnames": "^2.2.5",
-    "fecha": "^2.3.3",
     "memoize-bind": "^1.0.3",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
