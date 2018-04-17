@@ -10,8 +10,29 @@ import widgetBuilder from '../widget-builder';
 import classNames from 'classnames';
 import style from './style.module.css';
 
-const writer = t.writer('json');
-const reader = t.reader('json');
+function send({url, method, data, onRedirect, onErrors, onFatal}) {
+  const writer = t.writer('json');
+  const reader = t.reader('json');
+
+  const body = writer.write(data);
+  const headers = {
+    'Content-Type': 'application/transit+json'
+  };
+  fetch(url, {method, body, headers, credentials: 'include'})
+    .then(resp => {
+      if (resp.status === 422) {
+        resp.text().then(text => {
+          const errors = reader.read(text);
+          onErrors(errors);
+        });
+      } else if (resp.status === 200) {   // а точно 200? может 302?
+        const location = resp.headers.get('Location');
+        onRedirect(location);
+      } else {
+        onFatal();
+      }
+    });
+}
 
 export default function Submit(desc) {
   const url = desc.get(kw('url'));
@@ -38,35 +59,25 @@ export default function Submit(desc) {
       this.props.setErrors(errors);
     }
 
-    //ajax and redirect
     onSubmit() {
       if (this.state.loading) return;
-      this.setState(
-        {loading: true},
-        () => {
-          const body = writer.write(this.props.data);
-          const headers = {
-            'Content-Type': 'application/transit+json'
-          };
-          fetch(url, {method, body, headers, credentials: 'include'}).then(resp => {
-            //todo split by functions
-            this.setState({loading: false}, () => {
-              if (resp.status === 422) {
-                resp.text().then(text => {
-                  const errors = reader.read(text);
-                  this.setErrors(errors);
-                });
-              } else if (resp.status === 200) {
-                const location = resp.headers.get('Location');
-                window.location = location;
-              } else {
-                //todo handle
-                console.log(resp);
-              }
-            });
-          });
+      this.setState({ loading: true });
+      send({
+        url,
+        method,
+        data: this.props.data,
+        onRedirect: location => {
+          window.location = location;
+        },
+        onErrors: errors => {
+          this.setState({ loading: false });
+          this.setErrors(errors);
+        },
+        onFatal: () => {
+          this.setState({ loading: false });
+          alert("Fatal server error. Try later.");
         }
-      );
+      });
     }
 
     render() {
