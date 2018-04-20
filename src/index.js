@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import t from 'transit-js';
+const kw = t.keyword;
+
 import './main';
 import State from './state';
 import widgetBuilder from './widget-builder';
@@ -11,21 +13,18 @@ const forms = document.querySelectorAll('[data-form-ujs]');
 for (var f of forms) {
   const r = t.reader('json');
 
-  const name = f.dataset.formUjs;
+  const raw = f.dataset.formUjs;
+  const form = r.read(raw);
 
-  const descStr = document.getElementById(`${name}-description`).text;
-  const dataStr = document.getElementById(`${name}-data`).text;
-  const errorsStr = document.getElementById(`${name}-errors`).text;
+  const description = form.get(kw('description'));
+  const initialData = form.get(kw('initial-data'));
+  const errors = form.get(kw('errors'));
 
-  const desc = r.read(descStr);
-  const data = r.read(dataStr);
-  const errors = r.read(errorsStr);
-
-  const Form = widgetBuilder(desc);
+  const Form = widgetBuilder(description);
 
   ReactDOM.render(
     <State widget={Form}
-           initialData={data}
+           initialData={initialData}
            errors={errors} />,
     f
   );

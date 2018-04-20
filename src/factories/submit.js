@@ -28,7 +28,7 @@ function send({url, method, data, onRedirect, onErrors, onFatal}) {
           const errors = reader.read(text);
           onErrors(errors);
         });
-      } else if (resp.status === 200) {   // а точно 200? может 302?
+      } else if (resp.status === 201) {
         const location = resp.headers.get('Location');
         onRedirect(location);
       } else {
