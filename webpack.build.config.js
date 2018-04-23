@@ -5,7 +5,7 @@ module.exports = {
   mode: 'production',
   entry: './src/index.js',
   output: {
-    filename: 'form_ujs.js',
+    filename: 'form-ujs.js',
     path: path.resolve(__dirname, 'dist')
   },
   devtool: 'source-map',
