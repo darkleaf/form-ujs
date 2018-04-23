@@ -10,6 +10,7 @@ const desc = t.map([
   kw('widget'), kw('submit'),
   kw('url'), "/foo/bar",
   kw('method'), kw('post'),
+  kw('name'), "Submit",
   kw('nested'), t.map([
     kw('widget'), kw('group'),
     kw('nested'), [

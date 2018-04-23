@@ -50,6 +50,10 @@ export default function Submit(desc) {
   if (!t.isMap(nested))
     throw new TypeError('submit: nested must be a transit map');
 
+  const name = desc.get(kw('name'));
+  if (!_isString(name))
+    throw new TypeError('submit: name must be a string');
+
   const Nested = widgetBuilder(nested);
 
   return class extends React.Component {
@@ -107,7 +111,7 @@ export default function Submit(desc) {
                   className={buttonClass}
                   disabled={this.state.loading}
                   onClick={bind(this.onSubmit, this)}>
-            Submit
+            {name}
           </button>
         </form>
       );
