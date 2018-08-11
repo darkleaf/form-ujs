@@ -13,6 +13,14 @@ import widgetBuilder from '../widget-builder';
 import classNames from 'classnames';
 import style from './style.module.css';
 
+function addCSRF(headers) {
+  const meta = document.querySelector('meta[name=csrf-token]');
+  const token = meta && meta.content;
+  if (token) {
+    headers['X-CSRF-Token'] = token;
+  }
+}
+
 function send({url, method, data, onRedirect, onErrors, onFatal}) {
   const writer = t.writer('json');
   const reader = t.reader('json');
@@ -21,6 +29,8 @@ function send({url, method, data, onRedirect, onErrors, onFatal}) {
   const headers = {
     'Content-Type': 'application/transit+json'
   };
+  addCSRF(headers);
+
   fetch(url, {method, body, headers, credentials: 'include'})
     .then(resp => {
       if (resp.status === 422) {

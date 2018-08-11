@@ -1,13 +1,17 @@
 version: '3.3'
 
+volumes:
+  npm:
+
 services:
   app:
     image: node:8.11-alpine
-    working_dir: "${PWD}"
+    working_dir: /app
     command: npm start
     environment:
       - DEV_SERVER_PORT=4200
     ports:
       - "4200:4200" # http
     volumes:
-      - ".:${PWD}"
+      - .:/app
+      - npm:/app/node_modules
