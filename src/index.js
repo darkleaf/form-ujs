@@ -13,7 +13,7 @@ const r = t.reader('json');
 function makeElement(data) {
   const description = data.get(kw('description'));
   const initialData = data.get(kw('initial-data'));
-  const initialErrors = data.get(kw('errors'));
+  const initialErrors = data.get(kw('initial-errors'));
 
   const Form = widgetBuilder(description);
 
