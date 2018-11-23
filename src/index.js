@@ -8,24 +8,35 @@ import './main';
 import State from './state';
 import widgetBuilder from './widget-builder';
 
-const forms = document.querySelectorAll('[data-form-ujs]');
+const r = t.reader('json');
 
-for (var f of forms) {
-  const r = t.reader('json');
+function makeRoot(form) {
+  const root = document.createElement("div");
+  document.body.insertBefore(root, form);
+  return root;
+}
 
-  const raw = f.dataset.formUjs;
-  const form = r.read(raw);
-
-  const description = form.get(kw('description'));
-  const initialData = form.get(kw('initial-data'));
-  const errors = form.get(kw('errors'));
+function makeElement(data) {
+  const description = data.get(kw('description'));
+  const initialData = data.get(kw('initial-data'));
+  const initialErrors = data.get(kw('errors'));
 
   const Form = widgetBuilder(description);
 
-  ReactDOM.render(
+  return (
     <State widget={Form}
            initialData={initialData}
-           errors={errors} />,
-    f
+           initialErrors={initialErrors} />
   );
+}
+
+const formScripts = document.querySelectorAll('script[data-form-ujs]');
+
+for (let f of formScripts) {
+  const data = r.read( f.innerHTML );
+
+  const element = makeElement(data);
+  const root = makeRoot(f);
+
+  ReactDOM.render(element, root);
 }

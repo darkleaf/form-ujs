@@ -5,8 +5,8 @@ export default class State extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: this.props.initialData,
-      errors: this.props.initialErrors
+      data: props.initialData,
+      errors: props.initialErrors
     };
   }
 

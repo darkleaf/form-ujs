@@ -3,10 +3,13 @@ const webpack = require('webpack');
 
 module.exports = {
   mode: 'development',
-  entry: [
-    'react-hot-loader/patch',
-    './test/demo.js'
-  ],
+  entry: {
+    demo: [
+      'react-hot-loader/patch',
+      './test/demo.js'
+    ],
+    build: './src'
+  },
   devServer: {
     hot: true,
     contentBase: './test',
@@ -14,8 +17,7 @@ module.exports = {
     host: "0.0.0.0"
   },
   output: {
-    filename: 'demo.js',
-    path: path.resolve(__dirname, 'test')
+    filename: '[name].js'
   },
   devtool: 'eval',
   plugins: [
