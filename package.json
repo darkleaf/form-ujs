@@ -1,6 +1,6 @@
 {
   "name": "form-ujs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/form-ujs.js",
   "scripts": {
