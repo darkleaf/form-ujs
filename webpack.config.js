@@ -32,10 +32,10 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: [['env', { modules: false }], 'react'],
+            presets: [['@babel/env', { modules: false }], '@babel/react'],
             plugins: [
               'react-hot-loader/babel',
-              'transform-class-properties'
+              '@babel/proposal-class-properties'
             ]
           }
         }
