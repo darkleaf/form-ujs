@@ -12,7 +12,7 @@ const r = t.reader('json');
 
 function makeRoot(form) {
   const root = document.createElement("div");
-  document.body.insertBefore(root, form);
+  form.parentNode.insertBefore(root, form);
   return root;
 }
 
