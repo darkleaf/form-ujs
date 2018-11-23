@@ -10,12 +10,6 @@ import widgetBuilder from './widget-builder';
 
 const r = t.reader('json');
 
-function makeRoot(form) {
-  const root = document.createElement("div");
-  form.parentNode.insertBefore(root, form);
-  return root;
-}
-
 function makeElement(data) {
   const description = data.get(kw('description'));
   const initialData = data.get(kw('initial-data'));
@@ -30,13 +24,11 @@ function makeElement(data) {
   );
 }
 
-const formScripts = document.querySelectorAll('script[data-form-ujs]');
+const forms = document.querySelectorAll('[data-form-ujs]');
 
-for (let f of formScripts) {
-  const data = r.read( f.innerHTML );
-
+for (let f of forms) {
+  const data = r.read( f.dataset.formUjs );
   const element = makeElement(data);
-  const root = makeRoot(f);
 
-  ReactDOM.render(element, root);
+  ReactDOM.render(element, f);
 }
