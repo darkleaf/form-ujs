@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "blaze": "^4.2.0",
+    "blaze": "=4.0.0-7",
     "classnames": "^2.2.6",
     "lodash": "^4.17.11",
     "memoize-bind": "^1.0.3",
