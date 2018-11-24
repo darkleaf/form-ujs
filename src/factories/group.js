@@ -42,7 +42,8 @@ export default function Group(desc) {
 
       const errorClass = classNames(
         style['c-alert'],
-        style['c-alert--error']
+        style['c-alert--error'],
+        style['u-mt'],
       );
 
       return (
